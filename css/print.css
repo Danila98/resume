@@ -1,0 +1,258 @@
+/* ==========================================================================
+   Печатная (PDF) версия резюме — оптимизирована под ATS-парсеры
+   Текстовый слой, без картинок, без колонок, без иконок вместо слов.
+   ========================================================================== */
+
+* { box-sizing: border-box; }
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #f2f3f5;
+	font-family: Georgia, 'Times New Roman', 'Liberation Serif', serif;
+	color: #000;
+	line-height: 1.45;
+}
+
+/* --- Панель управления (только на экране) --------------------------------- */
+
+.toolbar {
+	background: #14161a;
+	color: #fff;
+	padding: 16px 24px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.toolbar__hint {
+	margin: 0;
+	font-size: 14px;
+	color: #c8ccd3;
+	max-width: 62ch;
+}
+
+.toolbar__actions {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.toolbar__btn {
+	background: #2f6df6;
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	padding: 11px 22px;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+	font-family: inherit;
+}
+.toolbar__btn:hover { background: #2559d0; }
+
+.toolbar__link {
+	color: #c8ccd3;
+	font-size: 14px;
+	text-decoration: none;
+	white-space: nowrap;
+}
+.toolbar__link:hover { color: #fff; }
+
+/* --- Документ ------------------------------------------------------------- */
+
+.doc {
+	max-width: 210mm;
+	margin: 24px auto;
+	padding: 18mm 16mm;
+	background: #fff;
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+.doc__header {
+	padding-bottom: 12px;
+	border-bottom: 2px solid #000;
+	margin-bottom: 18px;
+}
+
+.doc__name {
+	margin: 0 0 4px;
+	font-size: 24pt;
+	line-height: 1.15;
+	letter-spacing: -0.01em;
+}
+
+.doc__role {
+	margin: 0 0 10px;
+	font-size: 13pt;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.doc__contacts {
+	margin: 0;
+	font-size: 10pt;
+	line-height: 1.6;
+}
+.doc__contacts span::after {
+	content: ' · ';
+	color: #666;
+}
+.doc__contacts span:last-child::after { content: ''; }
+
+.doc__section { margin-bottom: 18px; }
+
+.doc__h2 {
+	margin: 0 0 10px;
+	font-size: 12pt;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	border-bottom: 1px solid #999;
+	padding-bottom: 4px;
+}
+
+.doc__text {
+	margin: 0;
+	font-size: 10.5pt;
+	text-align: justify;
+}
+
+.doc__text--spaced { margin-top: 6px; }
+
+/* --- Навыки: таблица парсится ATS надёжнее, чем flex-теги ----------------- */
+
+.doc__skills {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 10.5pt;
+}
+
+.doc__skills th {
+	text-align: left;
+	vertical-align: top;
+	width: 34mm;
+	padding: 3px 10px 3px 0;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.doc__skills td {
+	vertical-align: top;
+	padding: 3px 0;
+}
+
+/* --- Опыт ----------------------------------------------------------------- */
+
+.doc__job { margin-bottom: 14px; }
+.doc__job:last-child { margin-bottom: 0; }
+
+.doc__job-title {
+	margin: 0 0 2px;
+	font-size: 11.5pt;
+}
+
+.doc__job-meta {
+	margin: 0 0 3px;
+	font-size: 10pt;
+	color: #333;
+}
+
+.doc__job-context {
+	margin: 0 0 6px;
+	font-size: 10pt;
+	font-style: italic;
+	color: #333;
+}
+
+.doc__list {
+	margin: 0;
+	padding-left: 18px;
+	font-size: 10.5pt;
+}
+.doc__list li { margin-bottom: 3px; }
+
+.doc__job-note {
+	margin: 5px 0 0;
+	font-size: 9.5pt;
+	color: #444;
+	font-style: italic;
+}
+
+.doc__edu {
+	margin: 0 0 10px;
+	font-size: 10.5pt;
+}
+.doc__edu:last-child { margin-bottom: 0; }
+
+/* --- Печать --------------------------------------------------------------- */
+
+@page {
+	size: A4;
+	margin: 9mm 12mm;
+}
+
+@media print {
+	.no-print { display: none !important; }
+
+	body { background: #fff; line-height: 1.3; }
+
+	.doc {
+		max-width: none;
+		margin: 0;
+		padding: 0;
+		box-shadow: none;
+	}
+
+	/* Уплотнение под 2 страницы A4 */
+	.doc__name { font-size: 20pt; }
+	.doc__role { font-size: 11.5pt; margin-bottom: 7px; }
+	.doc__contacts { font-size: 9pt; line-height: 1.45; }
+	.doc__header { margin-bottom: 12px; padding-bottom: 8px; }
+
+	.doc__section { margin-bottom: 6px; }
+	.doc__h2 { font-size: 10.5pt; margin-bottom: 5px; padding-bottom: 2px; }
+
+	.doc__text,
+	.doc__skills,
+	.doc__list,
+	.doc__edu { font-size: 9.5pt; }
+
+	.doc__skills th,
+	.doc__skills td { padding: 1.5px 8px 1.5px 0; }
+
+	.doc__job { margin-bottom: 7px; }
+	.doc__job-title { font-size: 10.5pt; }
+	.doc__job-meta,
+	.doc__job-context { font-size: 9pt; margin-bottom: 1.5px; }
+	.doc__list li { margin-bottom: 1px; }
+	.doc__job-note { font-size: 8.5pt; margin-top: 3px; }
+	.doc__edu { margin-bottom: 7px; }
+
+	/* Короткие блоки не рвём, длинные (опыт) — разрешаем разрывать,
+	   иначе целый блок уезжает на новую страницу и оставляет пустоту. */
+	.doc__edu,
+	.doc__skills tr { break-inside: avoid; page-break-inside: avoid; }
+
+	.doc__job { break-inside: auto; }
+
+	/* Заголовок и мета-строки не должны отрываться от своего списка */
+	.doc__h2,
+	.doc__job-title,
+	.doc__job-meta,
+	.doc__job-context { break-after: avoid; page-break-after: avoid; }
+
+	/* Не оставлять одиночную строку списка на краю страницы */
+	.doc__list li { break-inside: avoid; page-break-inside: avoid; }
+	.doc__list { orphans: 2; widows: 2; }
+
+	/* Длинные абзацы могут перетекать между страницами: иначе целый блок
+	   уезжает на новую страницу и оставляет пустоту в конце предыдущей. */
+	.doc__text { break-inside: auto; orphans: 2; widows: 2; }
+
+	.doc__section { break-inside: auto; }
+
+	a { color: #000; text-decoration: none; }
+}
